@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Multimodal Sentiment Analysis</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Multimodal Sentiment Analysis</h1>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <label for="text">Text Input:</label>
+            <textarea id="text" name="text" rows="4" cols="50" placeholder="Enter text here..."></textarea>
+
+            <label for="audio">Audio Input:</label>
+            <input type="file" id="audio" name="audio" accept="audio/*">
+
+            <label for="video">Video Input:</label>
+            <input type="file" id="video" name="video" accept="video/*">
+
+            <button type="submit">Predict Sentiment</button>
+        </form>
+
+        {% if prediction %}
+            <h2>Sentiment Prediction: {{ prediction }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
