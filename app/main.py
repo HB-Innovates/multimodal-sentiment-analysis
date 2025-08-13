@@ -2,6 +2,9 @@ from flask import Flask, request, render_template
 import os
 from src.model import MultimodalModel
 from src.utils import load_model
+from src.text_processing import prepare_text_data
+from src.audio_processing import process_audio
+from src.video_processing import extract_frames
 
 app = Flask(__name__)
 
@@ -24,18 +27,18 @@ def predict():
     audio_file.save(audio_path)
     video_file.save(video_path)
 
-    # Process the inputs and make predictions
-    # (Assuming appropriate processing functions are defined in src)
-    # text_features = process_text(text)
-    # audio_features = process_audio(audio_path)
-    # video_features = process_video(video_path)
-    
-    # sentiment = model.predict(text_features, audio_features, video_features)
+    # Actual feature extraction
+    # For demonstration, using simple transforms. Replace with actual tokenizer/model as needed.
+    text_features = prepare_text_data([text], tokenizer=None)  # Pass actual tokenizer
+    audio_features = process_audio(audio_path)
+    video_frames = extract_frames(video_path)
+    video_features = video_frames  # Replace with actual video feature extraction/model
 
-    # For demonstration, returning a placeholder response
-    sentiment = "Positive"  # Placeholder for actual prediction
+    # Model prediction (stub)
+    # prediction = model.predict(text_features, audio_features, video_features)
+    prediction = "Positive"  # Replace with actual prediction logic
 
-    return render_template('index.html', sentiment=sentiment)
+    return render_template('index.html', prediction=prediction)
 
 if __name__ == '__main__':
     app.run(debug=True)

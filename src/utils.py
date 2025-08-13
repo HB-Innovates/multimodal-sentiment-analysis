@@ -1,12 +1,17 @@
-def save_model(model, filepath):
-    """Save the trained model to the specified filepath."""
-    import joblib
-    joblib.dump(model, filepath)
+import torch
 
-def load_model(filepath):
-    """Load a model from the specified filepath."""
-    import joblib
-    return joblib.load(filepath)
+def save_model(model, filepath):
+    """Save the trained PyTorch model to the specified filepath."""
+    torch.save(model.state_dict(), filepath)
+
+def load_model(filepath, model_class=None):
+    """Load a PyTorch model from the specified filepath. You must provide the model class."""
+    if model_class is None:
+        raise ValueError("model_class must be provided to load the model.")
+    model = model_class()
+    model.load_state_dict(torch.load(filepath))
+    model.eval()
+    return model
 
 def plot_metrics(metrics):
     """Plot training and evaluation metrics."""
