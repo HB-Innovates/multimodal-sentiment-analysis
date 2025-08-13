@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from flask import Flask, request, render_template
 import os
 from src.model import MultimodalModel
@@ -8,8 +11,17 @@ from src.video_processing import extract_frames
 
 app = Flask(__name__)
 
-# Load the pre-trained model
-model = load_model('path/to/saved/model')
+# Placeholder stubs for required models
+class DummyModel:
+    def __call__(self, x):
+        return x
+
+text_model = DummyModel()
+audio_model = DummyModel()
+video_model = DummyModel()
+
+# For testing, use a dummy model instance instead of loading from file
+model = MultimodalModel(text_model, audio_model, video_model)
 
 @app.route('/')
 def home():

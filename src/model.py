@@ -1,21 +1,21 @@
-class MultimodalModel:
+import torch
+import torch.nn as nn
+
+class MultimodalModel(nn.Module):
     def __init__(self, text_model, audio_model, video_model):
+        super(MultimodalModel, self).__init__()
         self.text_model = text_model
         self.audio_model = audio_model
         self.video_model = video_model
-
-    def build_model(self):
-        # Build the multimodal model architecture
-        pass
-
-    def combine_features(self, text_features, audio_features, video_features):
-        # Combine features from different modalities
-        pass
+        # Example: simple linear layer for fusion
+        self.fusion = nn.Linear(3, 1)  # Adjust input/output sizes as needed
 
     def forward(self, text_input, audio_input, video_input):
-        # Forward pass through the model
-        text_features = self.text_model(text_input)
-        audio_features = self.audio_model(audio_input)
-        video_features = self.video_model(video_input)
-        combined_features = self.combine_features(text_features, audio_features, video_features)
-        return combined_features
+        # Dummy feature extraction for demonstration
+        text_features = torch.tensor([1.0]) if not isinstance(text_input, torch.Tensor) else text_input.float()
+        audio_features = torch.tensor([1.0]) if not isinstance(audio_input, torch.Tensor) else audio_input.float()
+        video_features = torch.tensor([1.0]) if not isinstance(video_input, torch.Tensor) else video_input.float()
+        # Concatenate features
+        features = torch.cat([text_features, audio_features, video_features]).unsqueeze(0)
+        output = self.fusion(features)
+        return output
